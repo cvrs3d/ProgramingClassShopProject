@@ -1,2 +1,0 @@
-# ProgramingClassShopProject
-Simple Shop project 
