@@ -6,6 +6,7 @@ public class Product
     private double _price;
     private double _dph;
 
+
     public Product(string name, double price, double dph)
     {
         this._name = name;
@@ -15,8 +16,11 @@ public class Product
 
     public void PrintOutThePriceLine(int amount)
     {
-        // выведет строку цены продукта по всем стандартам чека
+        
     }
-    
-    
+
+    private void SetTheTotalPrice()
+    {
+    }
+
 }

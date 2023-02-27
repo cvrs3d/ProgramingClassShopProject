@@ -1,7 +1,12 @@
-﻿
-// 1. поменять массивы на хещмапы
-// 2. создать класс shop
-// 3. корзина и список продуктов - поля этого класса
-// 4. все методы из главной программы должны быть методами этого класса
+﻿namespace ShopProjectFinal;
 
-Console.WriteLine("Hello, World!");
+class MainProg
+{
+    static void Main()
+    {
+        Shop myShop = new Shop();
+        myShop.GetFilePath();
+        myShop.PrintOutTheContextMenu();
+    }
+}
+
