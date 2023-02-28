@@ -1,3 +1,5 @@
+
+
 namespace ShopProjectFinal;
 
 public class Shop
@@ -53,21 +55,33 @@ public class Shop
     public void PrintOutTheContextMenu() // do/while cycle here
     {
         FillTheProducts();
-        string state = " ";
+        string state;
         do
         {
           Console.Clear();
           Console.WriteLine("ID.........NAME........PRICE");
           OfferProductsToTheCustomer();
           ShowTheStartMenu();
-          // поставить тут валидацию
+          state = Console.ReadLine()!.ToLower();
+          if (String.IsNullOrEmpty(state))
+          {
+              Console.WriteLine("No such command");
+              state = "n";
+          }
+          else
+          {
+             state = ValidateTheAnswer(state);
+          }
         } while (state != "e");
         
     }
 
     private void OfferProductsToTheCustomer()
     {
-        // доделать выписку всех элементов хеша
+        foreach (var keyValuePair in this._products)
+        {
+            keyValuePair.Value.OfferTheProduct(keyValuePair.Key);
+        }
     }
 
     public void FillTheProducts() // Filling the hashmap from the specific file
@@ -83,9 +97,86 @@ public class Shop
         }
     }
 
-    private void ValidateTheAnswer(string answer)
+    private string ValidateTheAnswer(string answer)
     {
-        // здесь сделать свитч кейс
+        switch (answer)
+        {
+            case "p":
+                PutProductInCart();
+                return "p";
+            case "c":
+                OpenTheCart();
+                return "c";
+            case "b" :
+                CheckCustomerOut();
+                return "e";
+            case "e":
+                return "e";
+            default:
+                return "n";
+        }
+        
+    }
+
+    private void CheckCustomerOut()
+    {
+        using (StreamWriter sw = new StreamWriter("Check.txt"))
+        {
+            sw.WriteLine("Name............Amount.........Price");
+            foreach (var kvpair in this._customersCart)
+            {
+                sw.WriteLine(this._products[kvpair.Key].ReturnStringOfFullPrice(kvpair.Value));
+            }
+        }
+    }
+
+    private void OpenTheCart()
+    {
+        Console.Clear();
+        foreach (var kvpair in this._customersCart)
+        {
+            this._products[kvpair.Key].PrintOutThePriceLine(kvpair.Value);
+        }
+
+        Console.ReadLine();
+    }
+
+    private void PutProductInCart()
+    {
+        int id;
+        int amount;
+        Console.WriteLine("Please enter your product ID:");
+        id = Convert.ToInt32(Console.ReadLine());
+        if (id > 0 && id < 21)
+        {
+            Console.WriteLine("Please enter the amount:");
+            amount = Convert.ToInt32(Console.ReadLine());
+            if (InTheCart(id))
+            {
+                this._customersCart[id] += amount;
+            }
+            else
+            {
+                this._customersCart.Add(id, amount);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Sorry, we don't have that");
+        }
+        
+    }
+
+    private bool InTheCart(int id)
+    {
+        if (this._customersCart.ContainsKey(id))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void ShowTheStartMenu() // Shows menu on the screen

@@ -14,13 +14,40 @@ public class Product
         this._dph = dph;
     }
 
-    public void PrintOutThePriceLine(int amount)
+    public void PrintOutThePriceLine(int amount) // For the check
     {
+        double totalPrice;
+        if (this._dph > 21)
+        { 
+            totalPrice = (this._price * amount) + (((this._price * amount) * this._dph) / 121);
+        }
+        else
+        {
+            totalPrice = (this._price * amount) + (((this._price * amount) * this._dph) / 115);
+        }
         
+        Console.WriteLine($"{this._name}.............{this._price}x{amount}.........{totalPrice}");
     }
 
-    private void SetTheTotalPrice()
+    public void OfferTheProduct(int id)
     {
+        Console.WriteLine($"{id}........{this._name}........{this._price}");
+    }
+
+    public string ReturnStringOfFullPrice(int amount) // For the check
+    {
+        double totalPrice;
+        if (this._dph > 21)
+        { 
+            totalPrice = (this._price * amount) + (((this._price * amount) * this._dph) / 121);
+        }
+        else
+        {
+            totalPrice = (this._price * amount) + (((this._price * amount) * this._dph) / 115);
+        }
+        
+       string line = $"{this._name}.............{this._price}x{amount}.........{totalPrice}";
+       return line;
     }
 
 }
