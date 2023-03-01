@@ -2,13 +2,29 @@
 
 namespace ShopProjectFinal;
 
-public class Shop
+public class Shop // Main class, handling all the logic of the application.
 {
-    private Dictionary<int, Product> _products = new Dictionary<int, Product>(); // ID : Product
-    private Dictionary<int, int> _customersCart = new Dictionary<int, int>(); // ID : Amount
+    private Dictionary<int, Product> _products = new Dictionary<int, Product>(); // ID : Product HashSet of  the groceries
+    private Dictionary<int, int> _customersCart = new Dictionary<int, int>(); // ID : Amount HasSet representing customers cart
     private string _filePath = "";
 
-    public void GetFilePath()// reads users file with data
+
+    public void Run()
+    {
+        try
+        {
+            
+            GetFilePath();
+            PrintOutTheContextMenu();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    private void GetFilePath()// Gets/Validates users path to file with data and then writes it to filePath field.
     {
         bool state = false;
         do
@@ -27,7 +43,7 @@ public class Shop
         } while (state == false);
     }
 
-    private bool FileIsRight(string filePath)
+    private bool FileIsRight(string filePath) // Validates  the filePath
     {
         if (File.Exists(filePath))
         {
@@ -52,7 +68,7 @@ public class Shop
         }
     }
 
-    public void PrintOutTheContextMenu() // do/while cycle here
+    private void PrintOutTheContextMenu() // Shows context menu, contains it's logic. Implements full logic with do\while.
     {
         FillTheProducts();
         string state;
@@ -76,7 +92,7 @@ public class Shop
         
     }
 
-    private void OfferProductsToTheCustomer()
+    private void OfferProductsToTheCustomer()   //Prints all the available products on the screen
     {
         foreach (var keyValuePair in this._products)
         {
@@ -84,7 +100,7 @@ public class Shop
         }
     }
 
-    public void FillTheProducts() // Filling the hashmap from the specific file
+    private void FillTheProducts() // Filling the hashmap from the specific file with products and id
     {
         string lineOfFile;
         using (StreamReader sr = new StreamReader(_filePath))
@@ -97,7 +113,7 @@ public class Shop
         }
     }
 
-    private string ValidateTheAnswer(string answer)
+    private string ValidateTheAnswer(string answer) // Contains application logic in switch\case statement.
     {
         switch (answer)
         {
@@ -118,7 +134,7 @@ public class Shop
         
     }
 
-    private void CheckCustomerOut()
+    private void CheckCustomerOut() // Fill the .txt file with information(represent check)
     {
         using (StreamWriter sw = new StreamWriter("Check.txt"))
         {
@@ -130,7 +146,7 @@ public class Shop
         }
     }
 
-    private void OpenTheCart()
+    private void OpenTheCart() // Prints all the carts contents.
     {
         Console.Clear();
         foreach (var kvpair in this._customersCart)
@@ -141,7 +157,7 @@ public class Shop
         Console.ReadLine();
     }
 
-    private void PutProductInCart()
+    private void PutProductInCart() //Putting an object into a hashset or increments ones value.
     {
         int id;
         int amount;
@@ -163,11 +179,12 @@ public class Shop
         else
         {
             Console.WriteLine("Sorry, we don't have that");
+            Console.ReadLine();
         }
         
     }
 
-    private bool InTheCart(int id)
+    private bool InTheCart(int id) // Checks if certain product is in the hashmap
     {
         if (this._customersCart.ContainsKey(id))
         {
