@@ -5,8 +5,8 @@ public class Product // Class that represent products in store
     private readonly string _name;  // Fields
     private readonly double _price;
     private readonly double _dph;
-    private const double Dph15 = 15 / 115.0;
-    private const double Dph21 = 21 / 121.0;
+    private const double Dph15 = 15.0 / 115.0;
+    private const double Dph21 = 21.0 / 121.0;
 
 
     public Product(string name, double price, double dph) // Constructor
@@ -39,7 +39,7 @@ public class Product // Class that represent products in store
     public string ReturnStringOfFullPrice(int amount) // Using this method to write data into the .txt file (Output of the program)
     {
         double totalPrice;
-        if (this._dph > 21)
+        if (this._dph > 20)
         { 
             totalPrice = (this._price * amount) + ((this._price * amount) * Dph21);
         }
@@ -52,4 +52,18 @@ public class Product // Class that represent products in store
         return line;
     }
 
+    public double GetPrice(int amount)
+    {
+        double priceToReturn;
+        if (this._dph > 20)
+        { 
+            priceToReturn = (this._price * amount) + ((this._price * amount) * Dph21);
+        }
+        else
+        {
+            priceToReturn = (this._price * amount) + ((this._price * amount) * Dph15);
+        }
+
+        return priceToReturn;
+    }
 }

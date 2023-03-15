@@ -7,6 +7,7 @@ public class Shop // Main class, handling all the logic of the application.
     private Dictionary<int, Product> _products = new Dictionary<int, Product>(); // ID : Product HashSet of  the groceries
     private Dictionary<int, int> _customersCart = new Dictionary<int, int>(); // ID : Amount HasSet representing customers cart
     private string _filePath = "";
+    private double _totalPrice;
 
 
     public void Run()
@@ -136,19 +137,30 @@ public class Shop // Main class, handling all the logic of the application.
 
     private void CheckCustomerOut() // Fill the .txt file with information(represent check)
     {
+        Console.Clear();
         using (StreamWriter sw = new StreamWriter("Check.txt"))
         {
-            sw.WriteLine("Name............Amount.........Price");
+            sw.WriteLine("********Name............Amount.........Price********");
+            sw.WriteLine("\n \n*****************************************************");
             foreach (var kvpair in this._customersCart)
             {
                 sw.WriteLine(this._products[kvpair.Key].ReturnStringOfFullPrice(kvpair.Value));
             }
+            sw.WriteLine("******************************************************");
+            foreach (var i in this._customersCart)
+            {
+                this._totalPrice += (this._products[i.Key].GetPrice(i.Value));
+            }
+            sw.WriteLine($"\n \nTOTAL : {this._totalPrice}");
         }
+        Console.WriteLine("GoodBye");
+        Console.ReadLine();
     }
 
     private void OpenTheCart() // Prints all the carts contents.
     {
         Console.Clear();
+        Console.WriteLine("-----------------PRODUCT CART--------------------");
         foreach (var kvpair in this._customersCart)
         {
             this._products[kvpair.Key].PrintOutThePriceLine(kvpair.Value);
@@ -159,6 +171,7 @@ public class Shop // Main class, handling all the logic of the application.
 
     private void PutProductInCart() //Putting an object into a hashset or increments ones value.
     {
+        Console.Clear();
         int id;
         int amount;
         Console.WriteLine("Please enter your product ID:");
@@ -198,6 +211,7 @@ public class Shop // Main class, handling all the logic of the application.
 
     private void ShowTheStartMenu() // Shows menu on the screen
     {
+        Console.Clear();
         Console.WriteLine("[p]Pick a product");
         Console.WriteLine("-----------------");
         Console.WriteLine("[c]Open a cart");
