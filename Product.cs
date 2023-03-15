@@ -66,4 +66,21 @@ public class Product // Class that represent products in store
 
         return priceToReturn;
     }
+
+    public string PrintDphString(int amount)
+    {
+        string strToPrint;
+        if (this._dph > 20)
+        {
+            strToPrint =
+                $"{this._dph}......{this._price}.....{this._price * Dph21}....{(this._price * amount) + ((this._price * amount) * Dph21)}";
+        }
+        else
+        {
+            strToPrint =
+                $"{this._dph}......{this._price}.....{this._price * Dph15}....{(this._price * amount) + ((this._price * amount) * Dph15)}";
+        }
+
+        return strToPrint;
+    }
 }

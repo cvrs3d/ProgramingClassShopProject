@@ -1,5 +1,6 @@
 
 
+
 namespace ShopProjectFinal;
 
 public class Shop // Main class, handling all the logic of the application.
@@ -140,13 +141,26 @@ public class Shop // Main class, handling all the logic of the application.
         Console.Clear();
         using (StreamWriter sw = new StreamWriter("Check.txt"))
         {
-            sw.WriteLine("********Name............Amount.........Price********");
-            sw.WriteLine("\n \n*****************************************************");
+            sw.WriteLine("                    SUPEROBCHOD                     ");
+            sw.WriteLine("           Ulice obchodna 12 123 00 Praha X");
+            sw.WriteLine("              IC:12345678 DIC: CZ12345678");
+            sw.WriteLine("*********************************************************");
+            sw.WriteLine("Provozovna: 1                          Pokladna: 001");
+            sw.WriteLine($"Datum: {DateTime.Now}         Cislo uctenky: 123");
+            sw.WriteLine("**********Name............Amount.........Price**********");
+            sw.WriteLine("\n*********************************************************");
             foreach (var kvpair in this._customersCart)
             {
                 sw.WriteLine(this._products[kvpair.Key].ReturnStringOfFullPrice(kvpair.Value));
             }
-            sw.WriteLine("******************************************************");
+            sw.WriteLine("*********************************************************");
+            sw.WriteLine("************************DPH******************************");
+            sw.WriteLine("sazba...zaklad dane........dan........celkem.............");
+            foreach (var kvpair in _customersCart)
+            {
+                sw.WriteLine(this._products[kvpair.Key].PrintDphString(kvpair.Value));
+            }
+            sw.WriteLine("*********************************************************");
             foreach (var i in this._customersCart)
             {
                 this._totalPrice += (this._products[i.Key].GetPrice(i.Value));
@@ -155,6 +169,7 @@ public class Shop // Main class, handling all the logic of the application.
         }
         Console.WriteLine("GoodBye");
         Console.ReadLine();
+        PrintTheCheckOut();
     }
 
     private void OpenTheCart() // Prints all the carts contents.
@@ -220,5 +235,16 @@ public class Shop // Main class, handling all the logic of the application.
         Console.WriteLine("------------------");
         Console.WriteLine("[e]Exit");
     }
-    
+
+    private void PrintTheCheckOut()
+    {
+        using (StreamReader sr = new StreamReader("Check.txt"))
+        {
+            string line;
+            while((line = sr.ReadLine()!) != null)
+            {
+                Console.WriteLine(line);
+            }
+        }
+    }
 }
