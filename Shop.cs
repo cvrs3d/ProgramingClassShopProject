@@ -31,7 +31,6 @@ public class Shop // Main class, handling all the logic of the application.
         bool state = false;
         do
         {
-            Console.Clear();
             Console.WriteLine("Please, enter your file path.");
             _filePath = Console.ReadLine()!;
             if (String.IsNullOrEmpty(_filePath))
@@ -61,11 +60,13 @@ public class Shop // Main class, handling all the logic of the application.
             }
             else
             {
+                Console.WriteLine("File is empty");
                 return false;
             }
         }
         else
         {
+            Console.WriteLine("File does not exist");
             return false;
         }
     }
@@ -165,7 +166,7 @@ public class Shop // Main class, handling all the logic of the application.
             {
                 this._totalPrice += (this._products[i.Key].GetPrice(i.Value));
             }
-            sw.WriteLine($"\n \nTOTAL : {this._totalPrice}");
+            sw.WriteLine($"\n \nTOTAL : {this._totalPrice} Kc");
         }
         Console.WriteLine("GoodBye");
         Console.ReadLine();
